@@ -1,0 +1,16 @@
+{
+  "name": "node-tibero-odbc",
+  "version": "1.0.0",
+  "description": "test for connecting tibero with node-odbc",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "miachel",
+  "license": "ISC",
+  "dependencies": {
+    "detect-character-encoding": "^0.8.0",
+    "iconv-lite": "^0.4.24",
+    "odbc": "^2.3.6"
+  }
+}
