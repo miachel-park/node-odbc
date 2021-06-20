@@ -1,21 +1,21 @@
-const { Statement } = require('odbc');
 const odbc = require('odbc');
-const iconv = require('iconv-lite');
-const detectCharacterEncoding = require('detect-character-encoding');
+const { Statement } = require('odbc');
 
 // Connection String
 const connectionConfig = {
-    connectionString: 'DSN=myodbc8w;charset=utf8',
+    connectionString: 'DSN=tibero;charset=utf8',
     connectionTimeout: 10,
     loginTimeout: 10,
 };
 
-class Customer {
-    constructor(id, name, age, address) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.address = address
+class MsgData {
+    constructor(msgid, chid, roomid, userid, txhash, timestamp) {
+        this.msgid = msgid;
+        this.chid = chid;
+        this.roomid = roomid;
+        this.userid = userid;
+        this.txhash = txhash;
+        this.timestamp = timestamp;
     }
 }
 
@@ -33,10 +33,12 @@ odbc.connect(connectionConfig, (error, connection) => {
     connection.createStatement((err1, stmt) => {
         console.debug('creating statement!!!');
         if (err1) {
-            console.error(err1); 
+            console.error(err1);
+            return;
         }
         
-        const insert_stmt = 'INSERT INTO customer_test(ID, NAME, AGE, ADDRESS) VALUES(?, ?, ?, ?)';
+        // const insert_stmt = 'INSERT INTO msgdata(msgid, chid, roomid, userid, txhash, timestamp) VALUES(?, ?, ?, ?, ?, ?)';
+        const insert_stmt = 'INSERT INTO msgdata VALUES(?, ?, ?, ?, ?, ?)';
         stmt.prepare(insert_stmt, (err2) => {
                 if (err2) {
                     console.error(err2);
@@ -44,9 +46,11 @@ odbc.connect(connectionConfig, (error, connection) => {
                 }
 
                 // FIXME : 
-                let address = "test code";
-                let name = "공명식";
-                stmt.bind([Math.floor(Math.random() * 100), name, Math.floor(Math.random() * 100), address], 
+                const msgdata = new MsgData('542d90f8-c357-4469-8dcd-02c786f0915b', "channel-id-002", "roomid-id-002", "userid-00001", "txhash-0001", new Date().toUTCString());
+                console.debug(msgdata);
+
+                stmt.bind(['542d90f8-c357-4469-8dcd-02c786f0915b', "channel-id-002", "roomid-id-002", "userid-00001", "txhash-0001", 1624190218636], 
+                // stmt.bind([msgdata.msgid, msgdata.chid, msgdata.roomid, msgdata.userid, msgdata.txhash], 
                     (err3) => {
                     if (err3) {
                         console.error(err3);
@@ -61,22 +65,12 @@ odbc.connect(connectionConfig, (error, connection) => {
                         console.log(result);
 
                         // select record from table
-                        const query_stmt = "SELECT * FROM customer_test";
+                        const query_stmt = "SELECT * FROM msgdata";
                         connection.query(query_stmt, (error, rs) => {
                             if (error) { 
                                 console.error(error);
                             }
-                            rs.forEach( (result) => {
-                                const data = {
-                                    id : result['ID'],
-                                    name : result['NAME'],
-                                    age : result['AGE'],
-                                    address : result['ADDRESS']
-                                };
-
-                                console.log(result);
-                            })
-
+                            console.log(rs);
                             // close connection
                             connection.close((error) => {
                                 if (error) { console.error(error); }
@@ -86,6 +80,4 @@ odbc.connect(connectionConfig, (error, connection) => {
                 });
         });
     });
-
-
 });

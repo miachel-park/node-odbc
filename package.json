@@ -1,16 +1,22 @@
 {
-  "name": "node-tibero-odbc",
+  "name": "odbc",
   "version": "1.0.0",
-  "description": "test for connecting tibero with node-odbc",
+  "description": "ODBC (Open DataBase Connectivity)는 마이트로소프트가 만든 데이터베이스에 접근하기 위한 소프트웨어 표준 규격으로, 각 데이터베이스의 차이는 ODBC 드라이버에 흡수되기 때문에 사용자는 ODBC에 정해진 순서에 따라서 프로그램을 쓰면 접속처이 데이터베이스가 어떠한 데이터베이스 관리 시스템에 관리되고 있는지 의식할 필요 없이 접근할 수 있다.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miachel-park/node-odbc.git"
+  },
   "author": "miachel",
-  "license": "ISC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/miachel-park/node-odbc/issues"
+  },
+  "homepage": "https://github.com/miachel-park/node-odbc#readme",
   "dependencies": {
-    "detect-character-encoding": "^0.8.0",
-    "iconv-lite": "^0.4.24",
     "odbc": "^2.3.6"
   }
 }
