@@ -1,26 +1,21 @@
 const odbc = require('odbc');
 const { Statement } = require('odbc');
+const iconv = require("iconv-lite");
 
 // Connection String
 const connectionConfig = {
-    connectionString: 'DSN=tibero;charset=utf8',
+    connectionString: 'DSN=Tibero6;charset=UTF-8',
     connectionTimeout: 10,
     loginTimeout: 10,
 };
 
-class MsgData {
-    constructor(msgid, chid, roomid, userid, txhash, timestamp) {
+class Table01 {
+    constructor(msgid, hanguel, ncount) {
         this.msgid = msgid;
-        this.chid = chid;
-        this.roomid = roomid;
-        this.userid = userid;
-        this.txhash = txhash;
-        this.timestamp = timestamp;
+        this.hanguel = hanguel;
+        this.ncount = ncount;
     }
 }
-
-// let content = iconv.decode(Buffer.from('start main'), 'ISO-8859-1');
-console.log('한글이 깨진다.');
 
 odbc.connect(connectionConfig, (error, connection) => {
     console.log('connecting to database!!!');
@@ -37,8 +32,7 @@ odbc.connect(connectionConfig, (error, connection) => {
             return;
         }
         
-        // const insert_stmt = 'INSERT INTO msgdata(msgid, chid, roomid, userid, txhash, timestamp) VALUES(?, ?, ?, ?, ?, ?)';
-        const insert_stmt = 'INSERT INTO msgdata VALUES(?, ?, ?, ?, ?, ?)';
+        const insert_stmt = 'INSERT INTO table01(msgid, hanguel, ncount) VALUES(?, ?, ?)';
         stmt.prepare(insert_stmt, (err2) => {
                 if (err2) {
                     console.error(err2);
@@ -46,11 +40,13 @@ odbc.connect(connectionConfig, (error, connection) => {
                 }
 
                 // FIXME : 
-                const msgdata = new MsgData('542d90f8-c357-4469-8dcd-02c786f0915b', "channel-id-002", "roomid-id-002", "userid-00001", "txhash-0001", new Date().toUTCString());
-                console.debug(msgdata);
+                var msgid = iconv.encode("ABC한글", 'Windows949').toString();
+                var hanguel = '바이트한글';
+                console.debug(iconv.encodingExists('CP949'));
+                const data = new Table01(msgid, hanguel, 1234);
+                console.debug(data);
 
-                stmt.bind(['542d90f8-c357-4469-8dcd-02c786f0915b', "channel-id-002", "roomid-id-002", "userid-00001", "txhash-0001", 1624190218636], 
-                // stmt.bind([msgdata.msgid, msgdata.chid, msgdata.roomid, msgdata.userid, msgdata.txhash], 
+                stmt.bind([data.msgid, data.hanguel, data.ncount], 
                     (err3) => {
                     if (err3) {
                         console.error(err3);
@@ -65,7 +61,7 @@ odbc.connect(connectionConfig, (error, connection) => {
                         console.log(result);
 
                         // select record from table
-                        const query_stmt = "SELECT * FROM msgdata";
+                        const query_stmt = "SELECT * FROM table01";
                         connection.query(query_stmt, (error, rs) => {
                             if (error) { 
                                 console.error(error);

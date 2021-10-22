@@ -25,6 +25,12 @@ create table msgdata (
     chid    VARCHAR (64)    NOT NULL ,
     roomid  VARCHAR (64)    NOT NULL ,
     userid  VARCHAR (64)    NOT NULL ,
-    txhash  VARCHAR (512)   NOT NULL ,
-    TIMESTAMP TIMESTAMP     NOT NULL
+    txhash  VARCHAR (512)   NOT NULL,
+    hanguel VARCHAR(128)
+);
+
+create table table01 (
+    msgid   VARCHAR (128)   NOT NULL,
+    hanguel NVARCHAR(512),
+    ncount  NUMBER
 );
