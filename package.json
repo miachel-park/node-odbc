@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/miachel-park/node-odbc#readme",
   "dependencies": {
+    "jdbc": "^0.7.6",
     "odbc": "^2.3.6"
   }
 }

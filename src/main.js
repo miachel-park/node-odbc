@@ -4,7 +4,7 @@ const iconv = require("iconv-lite");
 
 // Connection String
 const connectionConfig = {
-    connectionString: 'DSN=Tibero6;charset=UTF-8',
+    connectionString: 'DSN=Tibero6',
     connectionTimeout: 10,
     loginTimeout: 10,
 };
