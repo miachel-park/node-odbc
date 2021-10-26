@@ -163,3 +163,5 @@ Configuring a Connector/ODBC DSN on Unix
 ## Issues
 
 * Tibero ODBC driver경우, 영문과 한글이 깨짐 UTF8 처리에 문제가 있느듯 함
+* window 10에 tibero 설치하고 window 10에서 실행하면 한글 문제 없음
+* linux tibero odbc driver에서 encoding 이슈가 있는듯
