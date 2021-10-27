@@ -40,9 +40,8 @@ odbc.connect(connectionConfig, (error, connection) => {
                 }
 
                 // FIXME : 
-                var msgid = iconv.encode("ABC한글", 'Windows949').toString();
+                var msgid = "ABC한글"
                 var hanguel = '바이트한글';
-                console.debug(iconv.encodingExists('CP949'));
                 const data = new Table01(msgid, hanguel, 1234);
                 console.debug(data);
 
@@ -61,7 +60,7 @@ odbc.connect(connectionConfig, (error, connection) => {
                         console.log(result);
 
                         // select record from table
-                        const query_stmt = "SELECT * FROM table01";
+                        const query_stmt = "SELECT convert(msgid, 'UTF8', 'MSWIN949') as MSGID, HANGUEL, NCOUNT FROM table01";
                         connection.query(query_stmt, (error, rs) => {
                             if (error) { 
                                 console.error(error);
