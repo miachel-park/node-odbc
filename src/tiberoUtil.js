@@ -8,6 +8,12 @@ var urlencode = require('urlencode');
     loginTimeout: 10,
  };
 
+
+/**
+ * HEXA값을 한글로 변환
+ * Hexa값을 Url Escape Code로 변환 후 urldecode
+ * ebb095 => %eb%b0%95 => 박
+ */
 function toKoreanLang(queryResult){
     let decodeString = "";
     for(var i=0;i<queryResult.length;i++){
@@ -19,6 +25,9 @@ function toKoreanLang(queryResult){
     return urlencode.decode(decodeString)
 }
 
+/**
+ * 리턴 객체 생성
+ */
 function makeReturnObject(result){
     return {
         CARDNO : result.CARDNO,
