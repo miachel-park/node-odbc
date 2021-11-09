@@ -165,3 +165,7 @@ Configuring a Connector/ODBC DSN on Unix
 * Tibero ODBC driver경우, 영문과 한글이 깨짐 UTF8 처리에 문제가 있느듯 함
 * window 10에 tibero 설치하고 window 10에서 실행하면 한글 문제 없음
 * linux tibero odbc driver에서 encoding 이슈가 있는듯
+
+* varchar type column에 UTF-8로 encoding으로 저장되어 있는것 같음
+* 이 데이터를 select 하면 깨지는데 이를 hex string으로 변경하고
+* hex string을 binary string으로 변경해서 해결 (urlencoding 사용)
